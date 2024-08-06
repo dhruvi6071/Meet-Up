@@ -1,4 +1,5 @@
 export default function ErrorBlock({ title, message }) {
+  //to handle errorblock.
   return (
     <div className="error-block">
       <div className="error-block-icon">!</div>
