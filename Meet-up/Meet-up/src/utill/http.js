@@ -1,4 +1,4 @@
-export async function fetchEvents(searchTerm) {
+export async function fetchEvents({signal}) {
 
   let url = 'http://localhost:3000/events';
 
@@ -6,7 +6,7 @@ export async function fetchEvents(searchTerm) {
     url += '?search=' + searchTerm
   }
     
-    const response = await fetch(url);
+    const response = await fetch(url, {signal: signal}); //Browser can use this signal internally to stop this request.
 
     if (!response.ok) {
       const error = new Error('An error occurred while fetching the events');
