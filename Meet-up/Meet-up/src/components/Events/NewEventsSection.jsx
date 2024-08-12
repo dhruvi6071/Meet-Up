@@ -15,7 +15,7 @@ export default function NewEventsSection() {
     staleTime: 5000, //Now it will take 5 seconds to send another request.
   
     //Garbage collection time. This controls how long the data in the cache can be kept around.
-    // gcTime: 30000
+    gcTime: 30000
   
   });
 
