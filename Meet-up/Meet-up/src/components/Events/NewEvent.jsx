@@ -3,12 +3,13 @@ import { useMutation } from '@tanstack/react-query'; //To send the post request 
 import Modal from '../UI/Modal.jsx';
 import EventForm from './EventForm.jsx';
 import { createNewEvent } from '../../utill/http.js';
+import ErrorBlock from '../UI/ErrorBlock.jsx';
 
 export default function NewEvent() {
   const navigate = useNavigate();
 
   //This function is called whenever any send request manually whne this component is run.
-  const {mutate} = useMutation({
+  const {mutate, isPending, isError, error} = useMutation({
 
     mutationFn: createNewEvent
   });
@@ -21,7 +22,9 @@ export default function NewEvent() {
   return (
     <Modal onClose={() => navigate('../')}>
       <EventForm onSubmit={handleSubmit}>
-        <>
+        {isPending && 'Submitting...'}
+        {!isPending && (
+          <>
           <Link to="../" className="button-text">
             Cancel
           </Link>
@@ -29,7 +32,10 @@ export default function NewEvent() {
             Create
           </button>
         </>
+        )}
+        
       </EventForm>
+      {isError && <ErrorBlock title="Failed to create event" message={error.info ?.message || 'Failed to create event. Please check your input and try again laler'} />}
     </Modal>
   );
 }
