@@ -7,13 +7,19 @@ import EventItem from "./EventItem";
 
 export default function FindEventSection() {
   const searchElement = useRef();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState();
 
-  const { data, isPending, isError, error } = useQuery({
+  // Differnece between isLoading and isPending is that isLoading will not be true if this query is disabled.
+
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["events", { search: searchTerm }],
 
     //Make sure to pass an object which is provided to http in the section.
     queryFn: ({signal}) => fetchEvents({signal,searchTerm}),
+
+    //In react query if we don't want to send the request then only add enable option if it is true then request is sent and if false then it is not sent.
+    enabled: searchTerm !== undefined //Only when user send something including the blank space then it will show the full display.
+
   });
 
   function handleSubmit(event) {
@@ -23,7 +29,7 @@ export default function FindEventSection() {
 
   let content = <p>Please enter a search term and to find events</p>;
 
-  if (isPending) {
+  if (isLoading) {
     content = <LoadingIndicator />;
   }
 
