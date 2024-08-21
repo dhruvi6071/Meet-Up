@@ -1,7 +1,7 @@
 import { Link, Outlet, useParams } from "react-router-dom";
 
 import Header from "../Header.jsx";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchEvent } from "../../utill/http.js";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 
@@ -10,6 +10,10 @@ export default function EventDetails() {
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["events", params.id],
     queryFn: ({ signal }) => fetchEvent({ id: params.id, signal }),
+  });
+
+  useMutation({
+    
   });
 
   let content;
